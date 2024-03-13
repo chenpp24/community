@@ -150,6 +150,14 @@ public class UserService implements CommunityConstant {
         return map;
     }
 
+    // 查询凭证
+    public LoginTicket findLoginTicket(String ticket) {
+        return loginTicketMapper.selectByTicket(ticket);
+    }
+    // 更新头像
+    public int updateHearder(int userId, String headerUrl) {
+        return userMapper.updateHeader(userId, headerUrl);
+    }
     // 退出登录
     public void logout(String ticket) {
         loginTicketMapper.updateStatus(ticket, 1);

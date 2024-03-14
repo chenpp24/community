@@ -97,4 +97,20 @@ public class UserController {
             logger.error("读取头像失败" + e.getMessage());
         }
     }
+    @LoginRequired
+    @RequestMapping(path = "/updatePassword", method = RequestMethod.POST)
+    public String updatePassword(String oldPassword, String newPassword, String confirmPassword, Model model) {
+        User user = hostHolder.getUser();
+        if (!user.getPassword().equals(CommunityUtil.md5(oldPassword + user.getSalt()))){
+            model.addAttribute("passwordMsg", "密码错误");
+        } else if (newPassword.length() < 8){
+            model.addAttribute("newPasswordMsg", "密码长度不能小于8位!");
+        } else if (!newPassword.equals(confirmPassword)) {
+            model.addAttribute("confirmPasswordMsg", "密码不一致!");
+        } else{
+            userService.updatePassword(user.getId(), CommunityUtil.md5(newPassword + user.getSalt()));
+            return "redirect:/index";
+        }
+        return "/site/setting";
+    }
 }

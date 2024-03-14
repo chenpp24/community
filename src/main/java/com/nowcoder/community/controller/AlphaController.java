@@ -151,7 +151,7 @@ public class AlphaController {
     @ResponseBody
     public String setCookie(HttpServletResponse response) {
         Cookie cookie = new Cookie("code", CommunityUtil.generateUUID());
-        // 设置cookie生效范围 在那些路径上有效
+        // 设置cookie生效范围 在哪些访问路径有效
         cookie.setPath("/community/alpha");
         // 设置cookie的生存时间
         // 如果设置为0，则浏览器关闭时cookie就会消失
